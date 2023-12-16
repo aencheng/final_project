@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="restaurant"
+            type="com.example.afinal.Restaurant" />
+    </data>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/imageCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/restaurant_title"
+            android:layout_width="275dp"
+            android:layout_height="wrap_content"
+            android:background="@color/cyan"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Taste Of India"
+            android:padding="24dp"
+            android:textSize="36sp"/>
+
+    </androidx.cardview.widget.CardView>
+</layout>

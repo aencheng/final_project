@@ -14,9 +14,10 @@
         android:layout_height="match_parent">
 
         <!-- Main content container -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             tools:context=".HomeFragment">
 
             <!-- Your existing UI components go here -->
@@ -24,13 +25,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_weight="1"
                 android:background="@color/cyan"
                 app:titleTextColor="#FFFFFF"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <ImageView
                 android:id="@+id/menu_icon"
@@ -38,10 +37,40 @@
                 android:layout_height="75dp"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:src="@drawable/menuicon"
-                tools:ignore="MissingConstraints" />
+                android:src="@drawable/menuicon"/>
+            <ImageView
+                android:id="@+id/signout_icon"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:src="@drawable/logout"
+                android:layout_gravity="end" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageView
+                    android:id="@+id/search_icon"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="end"
+                    android:clickable="true"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:src="@drawable/searchicon"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/recentView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"/>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/allView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="16"/>
+
+        </LinearLayout>
 
         <!-- Navigation drawer -->
         <com.google.android.material.navigation.NavigationView

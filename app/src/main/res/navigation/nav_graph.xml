@@ -47,4 +47,14 @@
             android:id="@+id/action_homeFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recentFragment"
+        android:name="com.example.afinal.RecentFragment"
+        android:label="fragment_recent"
+        tools:layout="@layout/fragment_recent" />
+    <fragment
+        android:id="@+id/allFragment"
+        android:name="com.example.afinal.AllFragment"
+        android:label="fragment_all"
+        tools:layout="@layout/fragment_all" />
 </navigation>

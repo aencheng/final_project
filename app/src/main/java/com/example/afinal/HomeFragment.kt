@@ -27,6 +27,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var userId: String
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var fragmentA: RecentFragment
+    private lateinit var fragmentB: AllFragment
 
     private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
         if (auth.currentUser == null) {
@@ -71,14 +73,26 @@ class HomeFragment : Fragment() {
         navDrawerButton.setOnClickListener {
             drawerLayout.openDrawer(GravityCompat.START)
         }
+        val logoutButton = view.findViewById<ImageView>(R.id.signout_icon)
+        logoutButton.setOnClickListener{
+            viewModel.signOut()
+            goToLoginScreen()
+        }
 
         // Load user information from Firestore
         loadUserInfo(view)
-        setHasOptionsMenu(true)
+
+        fragmentA = RecentFragment()
+        fragmentB = AllFragment()
+
+        swapFragments()
 
         return view
     }
 
+
+    // HERE IS THE CODE THAT DOESN'T WANNA WORK AND WON'T DO ANYTHING AT ALL
+    // LITERALLY HERE TO LOOK PRETTY
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         Log.i("OptionsMenu", "onCreateOptionsMenu called")
         inflater.inflate(R.menu.navigation_menu, menu)
@@ -86,27 +100,19 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.signout) {
-            // Handle the click event for the "Sign Out" item
-            Log.i("Test Button", "Signing Out")
-            viewModel.signOut()
-            goToLoginScreen()
-            return true
-        } else if (item.itemId == R.id.homeItem) {
-            // Handle the click event for the "Home" item
-            // Add your logic here
-            // For example, close the navigation drawer
-            drawerLayout.closeDrawer(GravityCompat.START)
-            return true
-        } else if (item.itemId == R.id.recentOrderItem) {
-            // Handle the click event for the "Recent Orders" item
-            // Add your logic here
-            return true
+        Log.i(item.itemId.toString(), "ID")
+        return when (item.itemId) {
+            R.id.signout -> {
+                // Handle the click event for the "Sign Out" item
+                Log.i("Test Button","Signing Out")
+                viewModel.signOut()
+                goToLoginScreen()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
         }
-
-        return super.onOptionsItemSelected(item)
     }
-
 
     private fun loadUserInfo(view: View) {
         val usersCollection = FirebaseFirestore.getInstance().collection("users")
@@ -147,6 +153,22 @@ class HomeFragment : Fragment() {
                 .placeholder(R.drawable.pfp) // Placeholder image while loading
                 .into(navHeaderProfileImage)
         }
+    }
+
+    private fun swapFragments() {
+        val fragmentManager = childFragmentManager // Use childFragmentManager for fragments inside fragments
+
+        // To replace the fragment in recentView
+        fragmentManager.beginTransaction()
+            .replace(R.id.recentView, fragmentA)
+            .addToBackStack(null) // Optional, to add the transaction to the back stack
+            .commit()
+
+        // To replace the fragment in allView
+        fragmentManager.beginTransaction()
+            .replace(R.id.allView, fragmentB)
+            .addToBackStack(null) // Optional, to add the transaction to the back stack
+            .commit()
     }
 
     private fun goToLoginScreen(){
